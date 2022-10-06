@@ -1,0 +1,113 @@
+HeaderLen= 10783 SourceCh= 16 StatevectorLen= 8
+[ State Vector Definition ] 
+Running 1 1 4 0
+Recording 1 1 4 1
+SourceTime 16 0 0 0
+StimulusTime 16 0 2 0
+__pad0 29 0 4 2
+[ Parameter Definition ] 
+Storage:Data%20Location string DataDirectory= ..\data ..\data % % // path to top level data directory (directory)
+Storage:Session string SubjectName= Name Name % % // subject alias
+Storage:Session string SubjectSession= 001 001 % % // three-digit session number
+Storage:Session string SubjectRun= 02 00 % % // two-digit run number
+Storage:Documentation string ID_System= % // BCI2000 System Code
+Storage:Documentation string ID_Amp= % // BCI2000 Amp Code
+Storage:Documentation string ID_Montage= % // BCI2000 Cap Montage Code
+Visualize:Timing int VisualizeTiming= 1 1 0 1 // visualize system timing (0=no, 1=yes) (boolean)
+Visualize:Source%20Signal int VisualizeSource= 1 1 0 1 // visualize raw brain signal (0=no, 1=yes) (boolean)
+Visualize:Source%20Signal int VisualizeSourceDecimation= auto auto % % // decimation factor for raw brain signal
+Visualize:Source%20Signal int VisualizeSourceBufferSize= auto auto % % // number of blocks to aggregate before sending to operator
+Visualize:Source%20Signal int VisualizeSourceTime= 2s 2s 0 % // how much time in Source visualization
+Visualize:Source%20Signal int SourceMin= auto // raw signal vis Min Value
+Visualize:Source%20Signal int SourceMax= auto // raw signal vis Max Value
+Source:Signal%20Properties int SourceCh= 16 16 1 % // number of digitized and stored channels
+Source:Signal%20Properties int SampleBlockSize= 32 32 1 % // number of samples transmitted at a time
+Source:Signal%20Properties int SamplingRate= 256Hz 256Hz 1 % // sample rate
+Source:SignalGeneratorADC list ChannelNames= 0 
+Source:SignalGeneratorADC list SourceChOffset= 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Source:SignalGeneratorADC list SourceChGain= 16 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 0.1muV 
+Source:SignalGeneratorADC int ModulateAmplitude= 0 0 0 1 // Modulate the amplitude with the mouse (0=no, 1=yes) (boolean)
+Source:SignalGeneratorADC int SineChannelX= 0 0 0 % // Channel number of sinewave controlled by mouse x position
+Source:SignalGeneratorADC int SineChannelY= 0 0 0 % // Channel number of sinewave controlled by mouse y position (0 for all)
+Source:SignalGeneratorADC int SineChannelZ= 0 0 0 % // Channel number of sinewave controlled by mouse key state
+Source:SignalGeneratorADC list NaNChannels= 0 // Channel numbers set to NaN if space is pressed (empty if not used)
+Source:SignalGeneratorADC float SineFrequency= 10Hz 10Hz % % // Frequency of sine wave
+Source:SignalGeneratorADC int SineAmplitude= 100muV 100muV % % // Amplitude of sine wave
+Source:SignalGeneratorADC int NoiseAmplitude= 30muV 30muV % % // Amplitude of white noise (common to all channels)
+Source:SignalGeneratorADC int DCOffset= 0muV 0muV % % // DC offset (common to all channels)
+Source:SignalGeneratorADC string AmplitudeMultiplier= 1 1 % % // Expression to multiply amplitude by
+Source:SignalGeneratorADC string OffsetMultiplier= % StimulusType % % // Expression to multiply offset by
+Source:SignalGeneratorADC int SignalType= 0 0 0 2 // numeric type of output signal:  0: int16, 1: float32, 2: int32 (enumeration)
+Source:SignalGeneratorADC matrix SourceProperties= 0 { Frequency Amplitude } // Source properties
+Source:SignalGeneratorADC matrix MixingMatrix= 0 1 // Source-to-sensor projection, rows are sources, columns are sensors
+Storage:BCI2000FileWriter string FileFormat= dat // format of data file (readonly)
+Storage:Documentation string StorageTime= 2021-05-19T10:16:04 // time of beginning of data storage
+Source:Source%20Filter int NotchFilter= 0 0 0 2 // Power line notch filter: 0: disabled, 1: at 50Hz, 2: at 60Hz (enumeration)
+Source:Source%20Filter int HighPassFilter= 0 0 0 2 // Source high pass filter: 0: disabled, 1: at 0.1Hz, 2: at 1Hz (enumeration)
+Source:Source%20Filter int LowPassFilter= 0 0 0 4 // Source low pass filter: 0: disabled, 1: at 9Hz, 2: at 30Hz, 3: at 40Hz, 4: at 70Hz (enumeration)
+Source:Source%20Filter list UnfilteredChannels= 0 // names or indices of channels to omit from source filter
+Source:Alignment int AlignChannels= 1 0 0 1 // align channels in time (0=no, 1=yes) (boolean)
+Source:Alignment floatlist SourceChTimeOffset= 0 0 % % // time offsets for all source channels (may be empty)
+Visualize:Processing%20Stages int VisualizeAlignmentFilter= 0 0 0 1 // Visualize AlignmentFilter output (boolean)
+Source:Online%20Processing list TransmitChList= 1 * // list of transmitted channels: Channel names may contain * and ? wildcards,  and character ranges enclosed in []; wildcard patterns may be negated by prepending an exclamation mark.  Ranges of channels may be specified using : or - to separate begin from end.
+Visualize:Processing%20Stages int VisualizeTransmissionFilter= 0 0 0 1 // Visualize TransmissionFilter output (boolean)
+Source:Websocket string WSSourceServer= *:20100 localhost:20100 % % // IP address/port to host a WebSocketServer on, e.g. localhost:20100
+System:Protocol int EventLink= 1 1 0 1 // Send events from Operator to Source module (boolean)
+Storage:Data%20Location string DataFile= $%7bSubjectName%7d$%7bSubjectSession%7d/$%7bSubjectName%7dS$%7bSubjectSession%7dR$%7bSubjectRun%7d.$%7bFileFormat%7d // name of data file relative to DataDirectory
+System:Core%20Connections string OperatorAddress= 127.0.0.1:4000 // (noedit)
+System string /ModuleName= SignalSource 
+System string /ListeningAddress= 172.31.64.1:53084 
+System:Core%20Connections string OperatorIP= 127.0.0.1 127.0.0.1 % % // the Operator module's IP (noedit)(readonly)
+System:Version matrix SignalSourceVersion= { Framework Revision Build Config Protocol } 1 3.05 N/A,%20N/A MSVC-19.28.29913.0-x86,%20release,%202021-03-30T18:04:38Z,%20Christopher%20Coogan@DESKTOP-M5FDAGM USE_DYNAMIC_CRT:TRUE%20USE_OPENMP:ON%20USE_PRECOMPILED_HEADERS:ON%20USE_ASSERTS_IN_RELEASE_BUILDS:OFF 2.3 // SignalSource version information (noedit)(readonly)
+System:Configuration matrix SignalSourceFilterChain= 10 { Filter%20Name Position%20String } DataIOFilter 0 SignalGeneratorADC 1 NullFileWriter 1 BCI2000FileWriter 1 EDFFileWriter 1 GDFFileWriter 1 SourceFilter 1.01 AlignmentFilter 1.1 TransmissionFilter 1.2 WSSourceFilter 1.2 // SignalSource filter chain (noedit)(readonly)
+System:Configuration matrix Filters= 12 1 /2/ExpressionFilter /3/ConnectorInput /3/WSIOFilter /3/KeystrokeFilter /3/ConnectorOutput /1/DataIOFilter /1/SignalGeneratorADC /1/BCI2000FileWriter /1/SourceFilter /1/AlignmentFilter /1/TransmissionFilter /1/WSIOFilter // Filter Directory (noedit)(readonly)
+Visualize:Property%20Sets matrix VisPropertySets= 0 1 // row titles are properties in the form "SRCD.Left", columns are property sets
+System:Version matrix OperatorVersion= { Framework Revision Build Config Protocol } 1 3.05 N/A,%20N/A MSVC-19.28.29336.0-AMD64,%20release,%202021-01-20Z,%20User@Dickinson USE_DYNAMIC_CRT:TRUE%20USE_OPENMP:ON%20USE_PRECOMPILED_HEADERS:ON%20USE_ASSERTS_IN_RELEASE_BUILDS:OFF 2.3 // operator module version information (noedit)(readonly)
+System:Protocol int AutoConfig= 1 1 0 1 // Use AutoConfig protocol extension (boolean)
+System:Protocol int OperatorBackLink= 1 1 0 1 // Send final state and signal information to Operator (boolean)
+Filtering:ExpressionFilter string StartRunExpression= % // expression executed on StartRun
+Filtering:ExpressionFilter string StopRunExpression= % // expression executed on StopRun
+Filtering:ExpressionFilter matrix Expressions= 0 1 // expressions used to compute the output of the ExpressionFilter (rows are channels; empty matrix for none)
+Visualize:Processing%20Stages int VisualizeExpressionFilter= 0 0 0 1 // Visualize ExpressionFilter output (boolean)
+System:Core%20Connections string SignalProcessingIP= 172.31.64.1 // (readonly)(noedit)
+System:Core%20Connections string SignalProcessingPort= 53081 // (readonly)(noedit)
+System:Version matrix SignalProcessingVersion= { Framework Revision Build Config Protocol } 1 3.05 N/A,%20N/A MSVC-19.28.29336.0-AMD64,%20release,%202021-01-20Z,%20User@Dickinson USE_DYNAMIC_CRT:TRUE%20USE_OPENMP:ON%20USE_PRECOMPILED_HEADERS:ON%20USE_ASSERTS_IN_RELEASE_BUILDS:OFF 2.3 // SignalProcessing version information (noedit)(readonly)
+System:Configuration matrix SignalProcessingFilterChain= 1 { Filter%20Name Position%20String } ExpressionFilter 2.D2 // SignalProcessing filter chain (noedit)(readonly)
+Connector:ConnectorInput list ConnectorInputFilter= 0 // list of state names or signal elements to allow, "*" for any, signal elements as in "Signal(1,0)"
+Connector:ConnectorInput string ConnectorInputAddress= % localhost:20320 % % // IP address/port to read from, e.g. localhost:20320
+Connector:Websocket string WSConnectorServer= % localhost:20323 % % // IP address/port to host a WebSocketServer on, e.g. localhost:20323
+Application:Human%20Interface%20Devices string KeystrokeStateName= % // State to be translated into keystrokes (0-F), empty for off
+Application:Human%20Interface%20Devices string KeystrokeExpression= % // Expression that evaluates to a virtual keycode, empty for off
+Application:Human%20Interface%20Devices string KeystrokeExpressionOnStartRun= % // Expression that initializes expression variables on StartRun
+Connector:ConnectorOutput string ConnectorOutputAddress= % localhost:20321 % % // one or more IP:Port combinations, e.g. localhost:20321
+System:Core%20Connections string ApplicationIP= 172.31.64.1 // (readonly)(noedit)
+System:Core%20Connections string ApplicationPort= 53082 // (readonly)(noedit)
+System:Version matrix ApplicationVersion= { Framework Revision Build Config Protocol } 1 3.05 N/A,%20N/A MSVC-19.28.29336.0-AMD64,%20release,%202021-01-20Z,%20User@Dickinson USE_DYNAMIC_CRT:TRUE%20USE_OPENMP:ON%20USE_PRECOMPILED_HEADERS:ON%20USE_ASSERTS_IN_RELEASE_BUILDS:OFF 2.3 // Application version information (noedit)(readonly)
+System:Configuration matrix ApplicationFilterChain= 4 { Filter%20Name Position%20String } ConnectorInput 2.9999 WSConnectorFilter 2.9999999 KeystrokeFilter 3.1 ConnectorOutput 3.9999 // Application filter chain (noedit)(readonly)
+System:Core%20Connections string SignalSourceIP= 172.31.64.1 // (readonly)(noedit)
+System:Core%20Connections string SignalSourcePort= 53084 // (readonly)(noedit)
+System:Randomization int RandomSeed= 13060 0 % % // seed for the BCI2000 pseudo random number generator (readonly)
+System:Randomization int RandomizationWarning= 1 1 0 1 // warn if subsequent Runs have identical RandomSeed value (boolean)
+System:State%20Vector int /StateVectorLength= 8 16 % % // length of the state vector in bytes (noedit)(readonly)
+
+uÿvÿL ¢ÿ# Z J 	 ` Áÿ! ÄÿH @ : k «®      Æÿf Âÿ… Âÿr 7 z Ğÿ…ÿŒÿuÿv xÿ×ÿ«®     ~ÿ«ÿ! _ Îÿxÿe {ÿ¬ÿÿ‡ÿsÿÓÿĞÿQ ‘ «®     sÿÃÿ±ÿæÿR s  7 †   —ÿ³ÿV ÈÿV Úÿ«®     ìÿ~ÿ  wÿ1 Øÿ‚ÿÉÿ÷ÿK €ÿ³ÿ< pÿÿÿÍÿ«®     àÿøÿ	 ‡ øÿ§ÿóÿÄÿwÿ ¡ÿK Øÿyÿ‰ M «®     °ÿĞÿu  ñÿC «ÿ ÿÿ… üÿ3 0 ^ ‰ÿ «®     ¦ÿT i  ÂÿÁÿãÿ	 z ±ÿj nÿT ’ t C «®     ‘ÿ3 zÿòÿi F ¦ÿÿÆÿwÿ¯ÿb z ƒ   «®     šÿ{ÿP tÿ\ _ ÿçÿĞÿz V œÿv šÿ# “ «®     Üÿ “ÿ{ Ùÿ* Ÿÿÿ E ˜ÿ Š D âÿ«ÿ«®      nÿÅÿ! ‚ ‹ÿ‰ÿ’ ¦ÿÿ ŒÿÛÿC s W «®     \  * ÿÿ^ Ñÿ oÿ3 ‡ÿ{ÿÿ™ÿ5 ÿ «®     ¼ÿ¼ÿ 6 x ÿÿÉÿïÿvÿ9  E • “ÿq «®     ` Q 	 kÿÓÿÖÿG €ÿ%  : ¥ÿ0 çÿ D «®     G Ğÿ ~ ½ÿöÿ} öÿ‡ÿ€ 2 c Äÿéÿ  «®     ãÿ
+ §ÿÿÿğÿl ) # šÿŒÿR $ ûÿ= < vÿ«®       + Àÿ† ÚÿO 	 ¸ÿ- ~ ³ÿ°ÿ o ùÿ«®     Œÿy  Çÿz 2 ÿmÿ/ q ˆ V íÿóÿj ¹ÿ«®      Öÿ‡  •ÿC  " ÿâÿf A  ¬ÿO ~ÿ«®     †ÿm X tÿo ¯ÿÿÿ  
+ j W  ÿB ¨ÿ< «®     R R X ûÿâÿxÿ} f ƒ M P • ” ¥ÿğÿ†ÿ«®     }ÿÁÿW 	 Y ( ’ S 
+ ÿuÿ  ¥ÿ9   ¡ÿ«®     ºÿ~ {     õÿÒÿzÿ> “  Áÿ o t «®     Èÿ F  ûÿ# ­ÿ€ †ÿ}ÿqÿ W 9 ' vÿ«®     äÿM   ›ÿ‡ t úÿ¾ÿr # M > r Óÿ> Äÿ«®     C óÿÂÿ% vÿ ‹ ÷ÿ ›ÿ¾ÿÈÿ‹ÿ§ÿ
+ ÿ«®     ‹ÿ’ÿªÿ$  . ‰ÿ] ~ ´ÿ¼ÿíÿÿ Ìÿ4 «®     I âÿ ¼ÿ| ôÿ§ÿ_ Œ ' ³ÿ ‹ÿb ÀÿW «®     l U –ÿöÿ t / ÿH F 7  ’ ` T w «®     åÿ¥ÿ§ÿW r ‘ ÿéÿ‚ }ÿÀÿôÿ Ìÿ „ «®     H Ñÿj şÿi Éÿ6 çÿ• ' ˆÿ   ÷ÿk Õÿ«®     ÌÿÿÿÜÿzÿëÿ…ÿG _ îÿH òÿŸÿ ? ‹ -¯     áÿÌÿÕÿT ãÿÃÿz x èÿm  ‚ 5 ' sÿˆ -¯     4  Œ üÿg D ? ±ÿ( ”ÿv éÿÈÿ+ e S -¯     xÿ–ÿˆÿ1 vÿd ¾ÿ^ ] M ÿ& h ›ÿöÿÿ-¯     ¯ÿéÿ c sÿôÿQ äÿüÿ ’  ¿ÿ4 ? \ -¯     ÿÿŠÿlÿK …  ‚ âÿ~ÿpÿ@   {ÿzÿT -¯     ÍÿX ¿ÿãÿ8 d »ÿJ  Œ ªÿ‚ ¤ÿ” ^ kÿ-¯     ’ÿâÿğÿy " f ®ÿ| ”ÿK ¹ÿÄÿzÿñÿÛÿâÿ-¯     v  sÿòÿ±ÿC áÿV zÿZ > ®ÿ |ÿĞÿ^ -¯     z Šÿ°ÿ¹ÿr  : * ‚ÿñÿ) Áÿôÿ! B ƒ -¯     ëÿüÿƒÿ  èÿ#  |ÿÕÿØÿ  ßÿõÿ›ÿ°ÿ-¯     Úÿ¦ÿ* ®ÿy ¥ÿ‰ÿo lÿ” 3 1 9  ƒÿs -¯     lÿ³ÿ£ÿÌÿÆÿ. ÔÿŠÿk ” o ıÿuÿ… s H -¯     '  ãÿóÿœÿÿâÿ{ ÿ1 “ÿÒÿ ‚ÿ—ÿ²ÿ-¯     ¿ÿáÿ  Äÿ$    zÿãÿ Y ÍÿİÿZ Óÿ-¯     ßÿw : t úÿnÿH …ÿ8 ÿM pÿÿÿ' Ëÿ -¯     şÿàÿe Q ÿ‚ Àÿa   = ; D  X z  -¯     { x ˜ÿB ‘ ÿÿÿÿG ÿéÿ¯ÿ“ÿ|ÿøÿ: H -¯     ğÿ —ÿÁÿe . , 4 f áÿ‰ÿm 3 Ğÿz ùÿ-¯     zÿˆÿl çÿšÿ/ ­ÿ­ÿ? nÿ¢ÿz ïÿ ‚ÿøÿ-¯     
+ ÿxÿÚÿa üÿ†ÿ0 [ Ûÿ0  < Êÿ¨ÿ -¯     ²ÿy Öÿ; X ¼ÿ: y ‹ÿD ªÿÌÿ? ÿ N -¯     C Äÿ “ÿY P ²ÿèÿ£ÿ} §ÿ| Ğÿÿz  -¯     úÿ+ )  qÿK q Ÿÿj Y k ’ÿN ¨ÿ ¤ÿ-¯       ÿ‡ Y ıÿ{  n ; üÿa •ÿøÿa ¶ÿ-¯     Öÿ –ÿ½ÿÂÿ—ÿ‡ îÿ# f # e Êÿßÿg j -¯     ¡ÿÿ: ÷ÿ¤ÿ»ÿ“ÿb [ U ²ÿ‚ ÿÿ‡ ùÿÿÿ-¯     wÿ+ T ÕÿàÿšÿÁÿ‹ÿ•ÿl ƒ E  ›ÿÓÿØÿ-¯     ½ÿ  (  5 Úÿ”ÿ^ tÿ% “ÿ- $ øÿÿÍÿ-¯     »ÿ“ v  êÿÿùÿ# ¶ÿºÿ¯ÿh ‘ ©ÿéÿf -¯     ÿ] S ıÿ¾ÿ= Õÿ³ÿ/ ÿ\ ™ÿ sÿ	 t -¯     ÖÿñÿÂÿyÿe ” Áÿéÿi e e lÿ7 Óÿ„ÿ -¯      ' ãÿ  Óÿ^ èÿ_ q Òÿe Şÿ¢ÿQ üÿ_ Ÿ¯     ªÿS °ÿwÿàÿçÿ@  } M ‚ÿQ ~ÿ ~ÿR Ÿ¯     Šÿéÿ³ÿ.  t œÿ¸ÿŠ „ÿM |ÿ¦ÿ ¸ÿÀÿŸ¯     Æÿ, êÿšÿ¢ÿ& ‡ Q   ©ÿÿÿ• y W |ÿŸ¯     9  üÿ † J * Çÿ¶ÿÅÿ}ÿ* ÿ„ÿp Œ Ÿ¯     8 ! uÿ¸ÿ* 
+ ŞÿÃÿM Íÿñÿ¿ÿÿ3 àÿŒ Ÿ¯     ƒ ²ÿR 0 ` m …ÿA Ÿÿäÿ£ÿÜÿÌÿ+ ÿ}ÿŸ¯     ” Šÿ6 óÿ 3 ! ~ÿt Áÿ‹ lÿ‰ÿ±ÿ< ¨ÿŸ¯     oÿ+ §ÿØÿk Óÿˆ ¸ÿ±ÿ¤ÿ	 ½ÿ‘ ÚÿÁÿ½ÿŸ¯     îÿöÿíÿ“ÿn «ÿíÿ ¢ÿ°ÿr Åÿ–ÿÿ¹ÿ’ Ÿ¯     4 X Éÿöÿzÿ… t @ oÿi ïÿ‰ÿŒÿŠÿ. e Ÿ¯     Z | ^ † ‘ÿ“ j óÿpÿ¿ÿ»ÿ ùÿ‘ ÆÿyÿŸ¯     ³ÿ ÿkÿA xÿJ s ÿŠ ¬ÿâÿ e qÿşÿŸ¯     óÿ [ ] rÿóÿÿ¡ÿe  ™ÿ” ˆÿ+ U ) Ÿ¯     % q |ÿ»ÿ 4   ğÿşÿÿõÿ ; € şÿŸ¯     Òÿêÿc y $ =  ÔÿŸÿªÿ   h yÿÑÿ Ÿ¯     ÇÿÍÿxÿc çÿ 3 . - Y ÑÿØÿp ‡ & " Ÿ¯     “ ßÿR 5 ÇÿıÿM  & ÈÿÅÿV ŞÿÀÿÌÿ’ Ÿ¯     Óÿ
+ îÿ C m óÿ 6 * |ÿƒ  lÿÿ—ÿŸ¯     ÿÿ³ÿ e [ ¡ÿ, äÿs Š ŞÿÍÿ¦ÿ W ` Ÿ¯     àÿ zÿìÿƒÿ8 ! Àÿ ™ÿÛÿT ²ÿçÿz v Ÿ¯     
+ 0 ®ÿÚÿœÿ\ ¤ÿ = ¶ÿ! Ôÿ  Æÿ  ÑÿŸ¯     - xÿ˜ÿ ğÿ lÿ ¢ÿo Øÿºÿf m    ÿŸ¯     ÚÿªÿN  N tÿ!   0 Q k N  w ÜÿŸ¯       óÿ' ŠÿH @ I d A wÿ ¤ÿ¤ÿz b Ÿ¯     d Õÿ¿ÿT Ãÿ™ÿÎÿ‚ÿöÿ{ÿ"   % ¯ÿ›ÿ»ÿŸ¯      † “ÿíÿ5 „ÿmÿ. 2 lÿİÿëÿ€ ×ÿv ¨ÿŸ¯     Ñÿîÿ‚ † [ ÿ j Êÿ9 f ’ÿmÿo —ÿp Ÿ¯      ’ _   ÿ‹ÿÚÿ¶ÿ îÿÇÿ2  şÿ€ ÿŸ¯     s < Ëÿzÿ,  ßÿ
+  ­ÿˆÿB  c ëÿ Ÿ¯     øÿvÿ ¶ÿ: Œ üÿøÿ‰ÿŒÿ= / ¸ÿb ¡ÿŠÿŸ¯     tÿ¼ÿ  ãÿ   ^ Òÿ8 • ğÿ4  ÿ½ÿ¶ÿŸ¯     Îÿ} ˆ Ûÿnÿöÿ°ÿ¼ÿ   ãÿ »ÿQ  { °      ÿ  èÿ˜ÿ\ æÿx  ‡ÿÿ< ’ÿ0 Ëÿ°     k Òÿ€ b • sÿ< & 9  ¢ÿïÿ  i 	 kÿ°     ÇÿÇÿ> àÿ? L   {ÿ	  x ÒÿG wÿ»ÿ; °     Êÿ€ ‚ b | G ¢ÿ »ÿÙÿW | E I ıÿÆÿ°     ÷ÿşÿÿ |ÿ
+ Æÿşÿ& ƒ t øÿB ãÿùÿ` °      ›ÿn m ÔÿÈÿ ÿŒ y L |   »ÿÛÿ»ÿ°     Âÿäÿÿ6 ÷ÿ½ÿÿûÿ- Óÿöÿ& ëÿi Ùÿ+ °     ’ íÿÿ7 ­ÿ‹ÿÛÿ Öÿ@ ¦ÿúÿñÿÚÿp i °     ²ÿ) q ™ÿºÿåÿd Z —ÿK nÿ; òÿÿE ) °     " rÿĞÿÈÿP ÿ6  ôÿ7 ³ÿg ' šÿÜÿ	 °     Ôÿ/ ÌÿÁÿ‹ÿkÿk ´ÿF  g Ğÿ­ÿºÿ|ÿT °     qÿˆÿ€ sÿ lÿ¦ÿi Œÿÿÿ áÿ©ÿl  Äÿ°     ³ÿd ( ¶ÿ‘ O  $ Œÿóÿ¶ÿŒ ” §ÿ  °     ÕÿB 
+ Üÿ qÿ°ÿc ÈÿØÿN 7 ‰ÿk ùÿ0 °     ‹ÿéÿıÿøÿ¨ÿzÿ? L zÿ; óÿR j ÿÿxÿ°     Ôÿe Ëÿ ÿ` ŠÿÂÿ  ÿx §ÿrÿ|ÿ3 Öÿ* °     B  oÿ- çÿh {ÿüÿèÿ^ ) = >  ºÿ> °     ÌÿÂÿv  €ÿ\ ‡ÿÀÿ5 ŒÿÌÿ - ‰ d T °     ìÿÂÿ[ K  W < 1 “ÿI … ûÿÄÿC åÿ$ °     ›ÿ] ÊÿA ”ÿĞÿ  «ÿÜÿÿÿ Áÿ \ “ÿ°     ÿ w kÿmÿ—ÿ{ ÿ­ÿb õÿ ¥ÿãÿ Ğÿ°     Ïÿqÿ‹ÿæÿ±ÿ
+ W X rÿşÿrÿyÿ¦ÿÀÿs ¼ÿ°     ğÿÿU u Éÿe ›ÿr M X °ÿ¶ÿV ÊÿÃÿ… °     s íÿ°ÿøÿw r ‘ÿx şÿ$ ¤ÿŠÿïÿÔÿÛÿ¾ÿ°     ÏÿI æÿ¢ÿõÿåÿÿ= ~ M ·ÿ ÇÿÙÿšÿtÿ°     ïÿòÿÿuÿkÿ †ÿóÿ~ÿÍÿªÿÂÿy  ÃÿK °      nÿŸÿy C {ÿ4  † °ÿùÿ“ÿZ  ®ÿ= °     ¨ÿÙÿ'  F ÿåÿ% Àÿ ¹ÿ ÇÿßÿØÿ^ °     «ÿäÿ ÒÿA " w Ûÿÿ‹ÿY 3 ™ÿ¤ÿÆÿ °     ˆ Ùÿ‹ÿ ' ½ÿnÿ O 9 úÿøÿ¤ÿ®ÿ• ˆÿ°     ¸ÿÈÿ |ÿŞÿ €ÿŠÿ 7 ‚ÿëÿ€ÿ÷ÿ€ e °     zÿ Íÿ ÿ o uÿ £ÿêÿ‚  € …ÿËÿJ  °     yÿ• „ÿn ‘ nÿ7 > n ) ÿûÿ…ÿu Êÿ†ÿ °     ìÿ]   ) + _ e Îÿw 3 €ÿB M ›ÿëÿ °      % óÿl ÿB ìÿÿŞÿwÿ= 4  ÿâÿ	  °     ! ÿàÿvÿîÿ y  vÿ% 4 y  šÿyÿÌÿ °     Îÿ³ÿL áÿ< †ÿ¦ÿüÿÿÕÿ ! ? I [ e  °     5 ÿ}ÿ S 3 uÿkÿ°ÿ t ` èÿÖÿ«ÿÿ °      Y ‰ÿ„ÿ” ™ÿ„ÿ0 ‚ ìÿ¹ÿ2 	 Z o ¬ÿ °     Èÿêÿ’ÿ} a   ›ÿòÿ~ o ©ÿÏÿl   xÿ °     ^ ÿ~ÿ^   àÿE øÿ 	 ‘ r »ÿ( ßÿ °     L 4 -  ÿ0 ëÿ¢ÿ¡ÿÚÿúÿ> ïÿÿc \  °       3 G ÑÿC # G . ±ÿz ôÿîÿÈÿd   °     e ±ÿÿx Îÿuÿ¥ÿ  ÿ‰ÿ  ‘    ºÿ/  °     ıÿi áÿ¼ÿ  ÷ÿF ëÿ#  P < ³ÿ|   °     ‹ éÿıÿ[ O ›ÿoÿE –ÿ uÿ‹ ªÿØÿƒ Ôÿ °     Ÿÿİÿÿ†ÿF  j Y a ƒÿ|ÿÑÿnÿ  rÿ  °     ÿêÿœÿÈÿg ¨ÿ- £ÿâÿ T «ÿ ôÿ ›ÿ °      } Úÿ—ÿ] ƒÿt qÿ„ ìÿH Şÿ 6 nÿåÿ °     o ÒÿnÿK Üÿ ~ÿ°ÿÏÿÆÿäÿ€ÿâÿ9 = q  °     ×ÿI g . “ ’ r  Œ l Øÿl ²ÿ ëÿØÿ °     Óÿ™ÿĞÿC   ‚ êÿ¬ÿéÿ  ( Ôÿÿäÿ\  °     * wÿp †ÿb Y ÕÿÚÿ›ÿ‰ ºÿ Š l 	 ¶ÿ °     ¾ÿE | …ÿ3 œÿˆÿ	 ªÿ¼ÿ8 O |   O  °     ¦ÿo ¨ÿ¥ÿ¤ÿ2 sÿM l ; G ^ ÒÿI ¿ÿâÿ °     † e ˆ  7 äÿ/  Ïÿx íÿˆÿàÿñÿD †ÿ °     ×ÿ¥ÿsÿ‘ Áÿãÿa _ ıÿòÿtÿzÿl ÇÿÑÿ+  °     ³ÿÿ“ÿN . sÿq B ÿÿ¶ÿ¯ÿsÿ€ ™ÿŸÿ(  °     zÿl – D - ñÿo @ 
+  Ñÿµÿ] g ÿÖÿ °      ”ÿ ÿtÿyÿH íÿúÿ   A ûÿ0 o O  °     L ! «ÿŒ •ÿs  )  êÿ` ¥ÿÍÿV  äÿ °     €ÿÇÿl   ÿìÿ–ÿ–ÿÇÿ$ ‡ÿj A ûÿ×ÿ °      ÿ±ÿ … ğÿµÿT ¹ÿÎÿ óÿÙÿ?  ¡ÿ °     ¶ÿŒ qÿ ëÿ ÌÿÇÿîÿ ‚ i 1 ¬ÿİÿa ±     ~ÿM }ÿíÿ şÿh ×ÿÌÿ& 4 ÕÿA Ìÿ  ±     ÍÿÌÿ £ÿ‘ ³ÿpÿáÿÜÿO A ñÿØÿ¥ÿ, ÿ±      †ÿ›ÿ€ÿx sÿ²ÿ!  ) ÿ “ ıÿ6 |ÿ±     ÿıÿÕÿA nÿ\ Äÿw |ÿ «ÿ‹ÿ°ÿa |ÿ ±     V Ùÿğÿrÿÿ=  Q s €ÿn §ÿ( ¥ÿr  ±     ^ óÿj †ÿ òÿ›ÿÉÿ. ¤ÿ! _ Ûÿéÿ‰ÿ’ÿ±     ŸÿT ¿ÿœÿ ] ÿ‹ÿ°ÿuÿj & |  @ éÿ±     ıÿÿt  œÿtÿ\ ÿéÿ™ÿ|ÿÑÿC ğÿˆ Õÿ±     1 æÿşÿ% Âÿ¼ÿ  w / oÿ„ . ‚ } øÿH ±      ´ÿK + òÿyÿ' • 9 äÿ- ¥ÿyÿüÿ ÿ±     Z ²ÿÔÿ[ Ïÿ0 & ìÿ¾ÿw ‰ íÿ# & ”ÿ‰ ±     ¥ÿ ¤ÿÿ * ³ÿÓÿo ¼ÿîÿ1 ‚ ÀÿÚÿ€ÿ±     ; ÿ Ûÿ§ÿ¢ÿ£ÿqÿÃÿ‰ 5 u A »ÿæÿ‚ÿ±     Š úÿèÿxÿX  ğÿU òÿùÿìÿ[ [ A ^ ~ÿ±     zÿ] Ùÿ¹ÿ= : ïÿ‘ ‘ m c < a 
+ 7   ±     ÿ ƒÿD  Éÿµÿv ” ÿ ìÿy \ i 4 ±     ‘ÿŠ Òÿ1 “ 6 L 2 < 1 ‹ÿÌÿÒÿºÿ~ÿ ±     ıÿ¤ÿÃÿJ •ÿq n ¼ÿ—ÿB Y “ÿÈÿ>  ÿƒ ±     V ‰ÿ yÿ	 ½ÿ9 êÿq ] •ÿ  ïÿÓÿ ±     òÿ # ˆ 0  A  ' šÿ† ¸ÿ€ B §ÿåÿ±     òÿ1 . “ÿÿ¶ÿpÿ$ rÿ”ÿ ' èÿ¡ÿwÿ ±      4 €ÿóÿ·ÿ‹ éÿÄÿ´ÿ@ h } üÿÁÿsÿšÿ±     ’ÿ‹   r rÿ> - E p W xÿ K Öÿ°ÿ±     " 9 ÿ' ‰ ^ Y ¬ÿn ~ÿ»ÿ”  ‘ ÷ÿR ±     çÿ©ÿ* 4 ½ÿ* ‚ | 1 ) ñÿE V  ©ÿ! ±     ıÿ÷ÿ9 ÿ•ÿšÿp ‰ ôÿ¼ÿ ”ÿşÿ uÿÕÿ±     ôÿÿÿ{ { ƒÿZ ÿa  íÿ„ ‹  Šÿ¨ÿÍÿ±     ÃÿX ™ÿc  ¶ÿq ¢ÿxÿW  L  ^ ‡  ±     mÿ] 6 êÿåÿf > ` ¾ÿ1 4 W  ÿ3  ±     ÌÿÖÿÑÿ„ ÿmÿ´ÿ J öÿ* sÿK [ ’ÿãÿ±     ŞÿxÿN ¼ÿ< E # Ôÿ6 ÿlÿrÿ€ÿåÿ& U ±     ëÿE 
+ t ¢ÿŒ  t L  x v  0 §ÿ+ š±     ûÿ‰ äÿR B …ÿX p O  ±ÿ²ÿˆÿ‚ Z Êÿš±     xÿİÿöÿÛÿ ÊÿY X Îÿ! b €ÿ 1 üÿéÿš±     S «ÿÍÿ  ÿêÿr  _ ( R  [ " T š±     ¤ÿ1 ÌÿÚÿ”ÿt n zÿb C z rÿÿ³ÿpÿãÿš±     ÍÿÙÿ8 ×ÿ0 q x k ¼ÿ æÿG ” ¹ÿ§ÿ×ÿš±     ôÿb K ÿÊÿ–ÿ|ÿæÿ3 ¾ÿ kÿ‚ ˆ  U š±     N k ŒÿèÿK H ` Ëÿyÿ/ H lÿ‚ÿ8 âÿN š±     pÿmÿf ÿJ ¥ÿ^ * ×ÿ€ÿ·ÿkÿ  òÿÀÿš±     Âÿpÿ0 ÿ~ † ‘ Y ¨ÿM H «ÿ‹ÿ# H ¦ÿš±     $ ±ÿ”ÿ‘ÿèÿW W 	 ûÿÂÿ¹ÿY † N € ÿš±     = €ÿm ‘  Èÿáÿc ‹ÿqÿıÿP ºÿ@ ÷ÿäÿš±      êÿ, ¤ÿ, Êÿe q 9  z  lÿ8 Y xÿš±     Úÿ’ÿ< |ÿóÿÂÿ¶ÿ ªÿ lÿe  T  ( š±     f àÿ`  ‡ÿ\ oÿ  C ? òÿ< Üÿèÿ! Æÿš±     °ÿ©ÿ ûÿ# “ Œ ] vÿ ¾ÿÖÿW Q  - š±     i b   E ‚  ®ÿãÿµÿ‡ÿ ÿ ­ÿ" 5 š±     \ £ÿìÿ< õÿ˜ÿ™ÿ ¦ÿoÿ³ÿsÿ0 R  G š±     5 Ïÿ²ÿ• l lÿkÿy # n kÿ¤ÿv  M óÿš±     ¨ÿm  êÿ; ˜ÿ& ~ ÙÿˆÿS Êÿ* oÿ2 8 š±      Şÿ. z ÿ ƒ äÿÑÿ@ ÀÿÒÿ b : îÿš±     ˆÿ{ G ) ŞÿoÿäÿèÿÈÿp D ôÿ{ÿm  ^ š±     ƒ Ôÿ‚ÿoÿûÿëÿºÿ $ Ëÿmÿkÿçÿn V ‡ š±     J w ²ÿ u äÿ= }ÿn ` u ğÿxÿe qÿ† š±     Şÿ  °ÿ‡ ­ÿ! zÿÜÿ   ¦ÿÃÿáÿöÿ†ÿa š±     ’ ¾ÿH N ~ % ‡ ÿÿˆ ] lÿxÿ  ·ÿìÿš±     6  Àÿ Š ßÿ 0 òÿv ` ÿ‰ÿ Ûÿæÿš±     ±ÿäÿäÿŠ  $ S ßÿ ˆÿS V ûÿt Œÿÿš±     S f m ”ÿ- ¾ÿÉÿÚÿşÿq \ ’ÿ• ÑÿŠÿ š±     ùÿ a «ÿsÿ mÿëÿT Ïÿj ‹ Öÿ9 ›ÿâÿš±     ©ÿoÿyÿ  íÿ‡ ğÿ€ÿ/ vÿP Üÿ“ ñÿ@ š±     ¾ÿF }ÿc —ÿ| 5 ÇÿI  h ) 4 }ÿ4 –ÿš±     ƒÿËÿØÿX Æÿ. Úÿg ' @ Ğÿ¬ÿ×ÿ~ ¿ÿ> ²     Y †ÿ" İÿv ÆÿrÿK 8 §ÿÈÿ( B ¬ÿ& Q ²     ƒÿüÿ[  Z Úÿ0  9 €   îÿy 3 ¡ÿ ²     L şÿòÿ= " - ıÿúÿ~ „ÿN  !  ; §ÿ²     úÿŠÿZ   Éÿ2 ÿ i  ¸ÿšÿU { êÿôÿ²     óÿG ’ y  Šÿ? ³ÿc èÿ/ C Áÿíÿ»ÿo ²     Œÿ6 µÿ…ÿìÿ·ÿ®ÿV T ¾ÿÇÿm  õÿ”  ²     T  …ÿÓÿ òÿ Z q [ êÿÅÿ & èÿE ²     ãÿ üÿ‚ÿÿÿÿ8 Øÿ²ÿÿÂÿ^ [ ½ÿ Íÿ²     ¤ÿìÿ€ÿ4 ‹ ÿqÿ‚   ²ÿìÿ›ÿy n „ ·ÿ²     Óÿ–ÿÉÿşÿ÷ÿßÿåÿÀÿ{ÿ \ sÿ* ñÿ šÿ²     D ‚ @ S  Ÿÿæÿíÿ* Šÿkÿ‰ p ~ÿÌÿéÿ²     
+ úÿ’   ¦ÿ ıÿ “ÿÌÿåÿÂÿªÿ¬ÿzÿÿ²     lÿáÿµÿb ] Îÿœÿ‹ÿ4 Ÿÿæÿ‹ÿ6 ¿ÿO E ²     ‹ÿ0 §ÿ ÿËÿ°ÿÙÿøÿG  ›ÿíÿŠ b  ²     ¬ÿ€ÿÑÿ·ÿ ƒ ‚ S üÿ" w [ æÿ@ ™ÿ§ÿ²     [ , ÿèÿ  ™ÿ6 ÿÛÿb ‡ {ÿ§ÿßÿ4 ²     ”ÿŠÿ”ÿL @ ’  Âÿ€  ) “  = ‡ÿØÿ²     „ ¼ÿÓÿlÿwÿl ‹ ( ´ÿ±ÿ J ,  „ ‚ ²     ÿ
+ ¬ÿÃÿ• ÿ¥ÿÿÿ‚ ¬ÿQ àÿŠÿE u »ÿ²     ãÿ»ÿ† „ÿàÿæÿ Ñÿzÿ? rÿâÿ# ‚ ßÿãÿ²     „ÿÀÿ% ˆÿÿ nÿºÿ 0 ßÿûÿÜÿåÿ ÷ÿ²     / ¸ÿîÿ»ÿj }ÿÿ f  2  ¦ÿÿÑÿ* ²      Ÿÿi 0 @ Èÿ üÿQ wÿ
+  £ÿ R yÿ²     M M V ìÿ Âÿ}  • uÿB ÿÿñÿİÿŠÿH ²      { e I F j İÿ|ÿj úÿ¨ÿ  M | ’  ²     ÊÿœÿèÿB # ®ÿûÿÏÿ " ãÿ÷ÿ·ÿU : Æÿ²     q ‡ÿ‘ Úÿóÿäÿüÿy oÿùÿÒÿ«ÿ”ÿ7 Ãÿ±ÿ²      S ¨ÿ  &  ÿÿÈÿÀÿs ÓÿĞÿJ c ğÿ²     - ªÿ—ÿd ÿÿX y ˆ  ‚ m ªÿªÿ”   ²     ¯ÿS úÿ  y zÿ¨ÿ! ßÿÇÿ_ ±ÿQ ‚ Z ²     E + ' 9 V   € ›ÿ† –ÿ" X 7 ÿ¢ÿN ²     @ ³ÿoÿG Âÿ‰ÿÿ4  / I ÉÿÌÿÿÿÿ ”²      0 ¤ÿM  * wÿüÿ V äÿwÿ‡ÿ4  óÿ”²     „ ’ÿ{ÿ¸ÿ½ÿy Šÿ‘ÿŠ ­ÿ±ÿ{ÿ[ > ¯ÿ·ÿ”²      êÿvÿ’ÿ   y ‡ÿ • X \ Œÿíÿ_ ”²     ìÿÇÿÀÿ xÿ+ 
+ Z %  O mÿ= ÏÿS ¦ÿ”²     3 ‘ f ™ÿ u şÿéÿ~ÿxÿ‹ÿ0 oÿ­ÿ  ”²     ¼ÿ g ÿÿïÿ¿ÿšÿ† ıÿ8 ¿ÿ{ r îÿmÿwÿ”²     E Àÿ? óÿT ìÿ` yÿ¯ÿ äÿoÿG w ¿ÿe ”²     ”ÿâÿÍÿ‡ & ìÿ~ e  Y 3 ¾ÿpÿ®ÿh “ ”²     n šÿ®ÿ| } ¾ÿ¬ÿ[ ÜÿŠ  ” a œÿ æÿ”²     ½ÿúÿT ±ÿˆÿĞÿ L z   W Ûÿ' wÿ„ T ”²     ÙÿÍÿãÿ7 d J ¡ÿG Üÿ, •   ˆ ¢ÿ©ÿ ”²      ÿ> p 5 u 7 kÿ= §ÿíÿ³ÿ|ÿÛÿ& , ”²     ‰ÿäÿB  ÿO Z éÿz ¢ÿyÿâÿ¨ÿ& »ÿ$ n ”²     ·ÿW |ÿ3  %  v ¢ÿyÿ×ÿ5 øÿi ‰ Ôÿ”²      x ÿ‚ÿ½ÿvÿg ßÿ`  ¢ÿ ¢ÿm ‰ N ”²     ıÿ ³ÿ9 ÿ= öÿN 0 mÿ¾ÿ¶ÿm ´ÿ4 œÿ”²     " ¨ÿŠ Îÿ·ÿ;  ºÿáÿ}ÿY A T  €ÿ ”²     R  ÿºÿ¡ÿ… ¹ÿ‰ 	 Íÿf Äÿÿôÿ°ÿq ”²     qÿ ˆÿ˜ÿ 1 t , „ÿ3 % : æÿ…ÿ W ”²     ¶ÿ2 •  Š Y ˜ÿe ¹ÿ. 3 } E  T W ”²     y ¾ÿ_ oÿd õÿÑÿ. ™ÿkÿkÿ¨ÿt Éÿ vÿ”²     ) x , ? p Öÿ V åÿpÿÍÿ Ñÿ: ¢ÿD ”²     rÿÃÿl 2 l ´ÿ+ êÿ„ uÿ®ÿJ k ¶ÿÿtÿ”²     °ÿ‹ Áÿ A Õÿv ¦ÿ f Ïÿ‰ÿ§ÿ²ÿkÿrÿ”²     @  éÿÿ¨ÿb A ‹ÿm “ÿ  Z yÿx % ”²     y   ‹  œÿ‡ÿúÿ
+ ƒ œÿ8 óÿ, ÿÿ	 ”²     u ~ÿ˜ÿ, ãÿ, : p èÿ|ÿ—ÿJ nÿkÿ·ÿÿ”²     Œÿ‰ÿ6   Y „ÿ{ÿmÿ ´ÿy ~ÿ	 ' " ”²     wÿæÿ˜ÿV ÈÿX x y  ÿ‰ ¦ÿtÿ%  ¶ÿ ”²     r —ÿ“ÿ°ÿ% | xÿÚÿp ™ÿ† 4 a , „ÿ›ÿ”²     ²ÿ¼ÿ Ôÿÿ’ o ãÿX ÛÿZ ”  ±ÿ0 ”ÿ”²     
