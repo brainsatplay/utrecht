@@ -19,3 +19,10 @@ try{
 catch(e){
     console.log(e)
 }
+
+let bciSourceConnection = new BCI2K.BCI2K_DataConnection();
+bciSourceConnection.connect(uri).then((x) => {
+  bciSourceConnection.onGenericSignal = (x) => {
+    console.log(x);
+  };
+});
