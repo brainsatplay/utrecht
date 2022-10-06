@@ -4,25 +4,41 @@ let bci = new bci2k.BCI2K_OperatorConnection();
 
 const uri = 'ws://127.0.0.1:20100'
 
-try{
-    await bci.connect(uri)
-    console.log('connected')
-    // bci.showWindow()
-    // bci.execute("GET SYSTEM STATE")
-    // await bci.startExecutable("SignalGenerator")
-    // await bci.resetSystem();
-    // await bci.startDummyRun();
-    let v = bci.getVersion()
-    // let name = await bci.execute("Stop");
-    console.log('Version', v)
-}
-catch(e){
-    console.log(e)
-}
+const p = document.createElement('p')
+p.innerText = 'Trying to connect...'
+document.body.appendChild(p)
 
-let bciSourceConnection = new bci2k.BCI2K_DataConnection();
-bciSourceConnection.connect(uri).then((x) => {
-  bciSourceConnection.onGenericSignal = (x) => {
-    console.log(x);
-  };
-});
+// // NOTE: This has some broken message-passing
+try{
+
+//     await bci.connect(uri)    
+//     p.innerText = 'Connected!'
+
+//     // let v = await bci.getVersion()
+//     //   const version = document.createElement('p')
+//     //   version.innerText = `Version: ${v}`
+//     //   document.body.appendChild(version)
+
+//     // bci.showWindow()
+//     // bci.execute("GET SYSTEM STATE")
+//     // await bci.startExecutable("SignalGenerator")
+//     // await bci.resetSystem();
+//     // await bci.startDummyRun();
+//     // let name = await bci.execute("Stop");
+// }
+
+
+  let bciSourceConnection = new bci2k.BCI2K_DataConnection();
+  bciSourceConnection.connect(uri).then((x) => {
+    bciSourceConnection.onGenericSignal = (x) => {
+      console.log(x);
+      // const p = document.createElement('p')
+      p.innerText = `Signal: ${x}`
+      // document.body.appendChild(p)
+    };
+  }).catch(e => {
+    p.innerText = e
+  });
+} catch(e){
+  p.innerText = e
+}

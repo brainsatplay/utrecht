@@ -4,9 +4,15 @@
 ## Description
 The goal of this project is to develop novel brain-computer interface (BCI) tasks that are engaging to children.
 
+## Running the Example
+1. Using a Windows PC, run the `bci2000/startme.bat` file. This will start a preconfigured instance of BCI2000(Web).
+2. Drag the `index.html` file into any web browser
+- If everything has run successfully, this will automatically connect to the BCI2000 instance and start passing synthetic data.
+- If this has failed, an error message will pop up describing the issue.
+
 ## Next Steps
 - [x] Setup BCI2000Web on a PC
-- [ ] Recieve messages in a basic HTML file
+- [x] Receive messages in a basic HTML file
 - [ ] Integrate [bci2k] with device-decoder
 - [ ] Emulate the basic P300 task on the browser
 - [ ] Meet for further discussion with Mariana and Eli
