@@ -2,7 +2,9 @@ import * as bci2k from "./bci2k/index.esm.js";
 // import * as bci2k from "https://cdn.jsdelivr.net/npm/bci2k/dist/index.js";
 let bci = new bci2k.BCI2K_OperatorConnection();
 
-const uri = 'ws://127.0.0.1:20100'
+const localhost = '127.0.0.1'
+const garrettPC = '192.168.0.11'
+const uri = `ws://${localhost}:20100`
 
 const p = document.createElement('p')
 p.innerText = 'Trying to connect...'
