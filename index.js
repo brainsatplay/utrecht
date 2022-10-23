@@ -5,7 +5,7 @@ import * as bci2k from "./bci2k/index.esm.js";
 
 let operator = new bci2k.BCI2K_OperatorConnection();
 let device = new bci2k.BCI2K_DataConnection();
-
+const sleep = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 
