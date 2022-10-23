@@ -1,7 +1,12 @@
 import * as bci2k from "./bci2k/index.esm.js";
+// import * as bci2k from "./bci2k/index.js";
+
 // import * as bci2k from "https://cdn.jsdelivr.net/npm/bci2k/dist/index.js";
+
 let operator = new bci2k.BCI2K_OperatorConnection();
 let device = new bci2k.BCI2K_DataConnection();
+
+
 
 
 const connect = document.getElementById('connect')
@@ -49,6 +54,12 @@ connect.onclick = async () => {
 
           const gotDevice = await device.connect(uri).then(() => true).catch(e =>  p.innerText = e);
           if(!gotDevice) return;
+
+
+          let v = await operator.getVersion()
+          const version = document.createElement('p')
+          version.innerText = `Version: ${v}`
+          document.body.insertAdjacentElement('afterbegin', version)
 
           p.innerText = 'Connected!'
 
@@ -118,10 +129,6 @@ connect.onclick = async () => {
 
             device.onSignalProperties = (data) => properties = data // Catch signal properties as a global variable
 
-
-      // let v = await bci.getVersion()
-      //   const version = document.createElement('p')
-      //   version.innerText = `Version: ${v}`
       //   document.body.appendChild(version)
 
       // bci.showWindow()

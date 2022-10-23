@@ -15,7 +15,10 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __async = (__this, __arguments, generator) => {
   return new Promise((resolve, reject) => {
     var fulfilled = (value) => {
@@ -219,23 +222,15 @@ var BCI2K_OperatorConnection = class {
         this.ondisconnect();
       };
       this.websocket.onopen = () => resolve();
-      let parseError = false;
       this.websocket.onmessage = (event) => {
-        try {
-          let { opcode, id, response } = JSON.parse(event.data);
-          switch (opcode) {
-            case "O":
-              this.responseBuffer.push({ id, response });
-              this.newData(response);
-              break;
-            default:
-              break;
-          }
-        } catch (e) {
-          if (!parseError) {
-            console.log("Error parsing message from BCI2000", e);
-            parseError = true;
-          }
+        let { opcode, id, contents } = JSON.parse(event.data);
+        switch (opcode) {
+          case "O":
+            this.responseBuffer.push({ id, response: contents });
+            this.newData(contents);
+            break;
+          default:
+            break;
         }
       };
     });
@@ -250,15 +245,19 @@ var BCI2K_OperatorConnection = class {
     if (this.connected()) {
       return new Promise((resolve, reject) => {
         this.msgID = this.msgID + 1;
-        this.websocket.send(JSON.stringify({
-          opcode: "E",
-          id: this.msgID,
-          contents: instruction
-        }));
+        this.websocket.send(
+          JSON.stringify({
+            opcode: "E",
+            id: this.msgID,
+            contents: instruction
+          })
+        );
         this.newData = (data) => resolve(data);
       });
     }
-    return Promise.reject("Cannot execute instruction: not connected to BCI2000");
+    return Promise.reject(
+      "Cannot execute instruction: not connected to BCI2000"
+    );
   }
   getVersion() {
     return __async(this, null, function* () {
@@ -572,12 +571,18 @@ var BCI2K_DataConnection = class {
     }
     this.signalProperties.numelements = this.signalProperties.elements.length;
     this.signalProperties.signaltype = props[pidx++];
-    this.signalProperties.channelunit = this._decodePhysicalUnits(props.slice(pidx, pidx += 5).join(" "));
-    this.signalProperties.elementunit = this._decodePhysicalUnits(props.slice(pidx, pidx += 5).join(" "));
+    this.signalProperties.channelunit = this._decodePhysicalUnits(
+      props.slice(pidx, pidx += 5).join(" ")
+    );
+    this.signalProperties.elementunit = this._decodePhysicalUnits(
+      props.slice(pidx, pidx += 5).join(" ")
+    );
     pidx++;
     this.signalProperties.valueunits = [];
     for (let i = 0; i < this.signalProperties.channels.length; i++)
-      this.signalProperties.valueunits.push(this._decodePhysicalUnits(props.slice(pidx, pidx += 5).join(" ")));
+      this.signalProperties.valueunits.push(
+        this._decodePhysicalUnits(props.slice(pidx, pidx += 5).join(" "))
+      );
     pidx++;
     this.onSignalProperties(this.signalProperties);
   }
@@ -626,13 +631,19 @@ var BCI2K_DataConnection = class {
       for (let el = 0; el < nElements; ++el) {
         switch (signalType) {
           case this.SignalType.INT16:
-            signal[ch].push(signalData.getInt16((nElements * ch + el) * 2, true));
+            signal[ch].push(
+              signalData.getInt16((nElements * ch + el) * 2, true)
+            );
             break;
           case this.SignalType.FLOAT32:
-            signal[ch].push(signalData.getFloat32((nElements * ch + el) * 4, true));
+            signal[ch].push(
+              signalData.getFloat32((nElements * ch + el) * 4, true)
+            );
             break;
           case this.SignalType.INT32:
-            signal[ch].push(signalData.getInt32((nElements * ch + el) * 4, true));
+            signal[ch].push(
+              signalData.getInt32((nElements * ch + el) * 4, true)
+            );
             break;
           case this.SignalType.FLOAT24:
             signal[ch].push(0);
@@ -652,16 +663,26 @@ var BCI2K_DataConnection = class {
     let firstZero = i8Array.indexOf(0);
     let secondZero = i8Array.indexOf(0, firstZero + 1);
     let decoder = new TextDecoder();
-    let stateVectorLength = parseInt(decoder.decode(i8Array.slice(1, firstZero)));
-    let numVectors = parseInt(decoder.decode(i8Array.slice(firstZero + 1, secondZero)));
+    let stateVectorLength = parseInt(
+      decoder.decode(i8Array.slice(1, firstZero))
+    );
+    let numVectors = parseInt(
+      decoder.decode(i8Array.slice(firstZero + 1, secondZero))
+    );
     let index = secondZero + 1;
     let data = new DataView(dv.buffer, index);
     let states = {};
     for (let state in this.stateFormat) {
-      states[state] = Array(numVectors).fill(this.stateFormat[state].defaultValue);
+      states[state] = Array(numVectors).fill(
+        this.stateFormat[state].defaultValue
+      );
     }
     for (let vecIdx = 0; vecIdx < numVectors; vecIdx++) {
-      let vec = new Uint8Array(data.buffer, data.byteOffset + vecIdx * stateVectorLength, stateVectorLength);
+      let vec = new Uint8Array(
+        data.buffer,
+        data.byteOffset + vecIdx * stateVectorLength,
+        stateVectorLength
+      );
       let bits = [];
       for (let byteIdx = 0; byteIdx < vec.length; byteIdx++) {
         bits.push((vec[byteIdx] & 1) !== 0 ? 1 : 0);
