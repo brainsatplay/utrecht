@@ -6,6 +6,7 @@ The goal of this project is to develop novel brain-computer interface (BCI) task
 
 ## Running the Example
 1. Using a Windows PC, run the `bci2000/startme.bat` file. This will start a preconfigured instance of BCI2000(Web).
+    - **Note:** Actually we require use of the relay server specified in `server.js`...as messages are otherwise unreadable.
 2. Drag the `index.html` file into any web browser
 3. Press the Connect button after selecting the appropriate target computer.
 - If everything has run successfully, this will automatically connect to the BCI2000 instance and start passing synthetic data.
@@ -17,7 +18,7 @@ The goal of this project is to develop novel brain-computer interface (BCI) task
 - [x] Reach out to the BCI2000Web team (Christopher Coogan) to solve a message-passing bug with our old code
 - [ ] Integrate [bci2k] with device-decoder
 - [ ] Emulate the basic P300 task on the browser
-- [ ] Meet for further discussion with Mariana and Eli
+- [x] Meet for further discussion with Mariana and Eli
 
 ## The Details
 ### Tasks

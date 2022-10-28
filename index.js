@@ -8,7 +8,6 @@ let device = new bci2k.BCI2K_DataConnection();
 const sleep = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
-
 const connect = document.getElementById('connect')
 const select = document.querySelector('select')
 
