@@ -1,7 +1,16 @@
+
 import * as bci2k from "./bci2k/index.esm.js";
+import computers from './computers.js'
 // import * as bci2k from "./bci2k/index.js";
 
 // import * as bci2k from "https://cdn.jsdelivr.net/npm/bci2k/dist/index.js";
+
+for (let ip in computers) {
+    let option = document.createElement('option');
+    option.value = ip;
+    option.innerText = computers[ip];
+    document.querySelector('select').appendChild(option);
+}
 
 let operator = new bci2k.BCI2K_OperatorConnection();
 let device = new bci2k.BCI2K_DataConnection();
@@ -52,13 +61,9 @@ connect.onclick = async () => {
           operator.execute(script);
           await sleep(4000); //Replace with a check to see if BCI2000 is running
           
-          const gotDevice = await device.connect(`${baseURI}:20100`).then(() => true).catch(e =>  p.innerText = e);
-          if(!gotDevice) return;
 
-          let v = await operator.getVersion()
 
-          p.innerText = 'Connected!'
-
+          let latest = {}
             // Create Event Handlers
             device.onGenericSignal = (raw) => {
 
@@ -66,40 +71,27 @@ connect.onclick = async () => {
                 let monitoredStates = Object.keys(states)
                 monitoredStates.forEach(k => {
                     if(device.states[k] != null) {
-
-                        // LIMITATIONS
-                        // BCI2000 only supports (1) exclusive and (2) binary switches for now. 
-                        // The framework itself supports values from 0-1 for any particular state.
-
                         let value = device.states[k][0] // Exclusive (only first index)
-                        console.log('Latest State', k, value)
-                    //     // if (Object.keys(this.states[k].length == 1) || value != 0){
-                    //     if (this.states[k][value].data != true){
-                    //     this.states[k].forEach((state,i) => { // Exclusive (resets states not chosen)
-                    //         if (i === value) {
-                    //             this.states[k][value].data = true // Binary
-                    //         }
-                    //         else {
-                    //             if (this.states[k][i].data != false) {
-                    //                 this.states[k][i].data = false // Binary
-                    //             }
-                    //         }
-                    //     })
-                    // // }
-                    // }
+                        if (!(k in states)) {
+                            states[k] = value
+                            console.log('Latest State', k, value)
+                        } else if (states[k] != value) {
+                            states[k] = value
+                            console.log('Latest State', k, value)
+                        }
                   }
                 })
                
                 // Raw Data
-                if (properties) {
+                // if (properties) {
                   raw.forEach((arr,i) => {
                     if (!paragraphs[i]) {
                       paragraphs[i] = document.createElement('p')
                       document.body.appendChild(paragraphs[i])
                     }
-                    paragraphs[i].innerHTML = `<b>${properties.channels[i]}:</b> ${arr.join(', ')}`
+                    paragraphs[i].innerHTML = `<b>${properties ? properties.channels[i] : i }:</b> ${arr.join(', ')}`
                   })
-                }
+                // }
             };
 
             // Initialize Possible Device States
@@ -130,6 +122,11 @@ connect.onclick = async () => {
               properties = data
             } // Catch signal properties as a global variable
 
+
+            const gotDevice = await device.connect(`${baseURI}:20100`).then(() => true).catch(e =>  p.innerText = e);
+            if(!gotDevice) return;
+  
+            p.innerText = 'Connected!'
       //   document.body.appendChild(version)
 
       // bci.showWindow()
